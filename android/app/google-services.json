@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "371227979072",
+    "project_id": "notipflutter",
+    "storage_bucket": "notipflutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371227979072:android:fde03676c908b6da069ea5",
+        "android_client_info": {
+          "package_name": "com.example.sharedp11_2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN_jpNp0-bkhnZvn-4Znp0ZtLvaU-3CZg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

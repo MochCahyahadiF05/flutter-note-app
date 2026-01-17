@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'firebase/auth_page.dart';
+import 'firebase/notip_service.dart';
 import 'notes_page.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await NotifService.instance.init();
+  await NotifService.instance
+      .showNow(title: 'Test Notification', body: 'Muncul sekarang');
   runApp(const MyApp());
 }
 
@@ -13,9 +22,34 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Notes SQLite',
+      title: 'Notes Hybrid',
       theme: ThemeData(useMaterial3: true),
-      home: const NotesPage(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snap) {
+          final user = snap.data;
+          if (user == null) return const AuthPage();
+
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Notes Hybrid'),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.logout),
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    await NotifService.instance.showNow(
+                      title: 'Logout', 
+                      body: 'Berhasil Keluar!'
+                    );
+                  },
+                ),
+              ],
+            ),
+            body: const NotesPage(),
+          );
+        },
+      ),
     );
   }
 }
